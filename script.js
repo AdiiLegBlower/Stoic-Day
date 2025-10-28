@@ -1,13 +1,13 @@
 import { stoicQuotes } from "./data.js";
 import 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
 
-
 let alreadyDisplayed = [];
 let n = alreadyDisplayed.length;
 let quote = '';
 let isspeaking = false;
 let bookmarked = [];
 let index;
+let isactive = false;
 
 function ChooseIndex(){
     index = Math.floor(Math.random()*100);
@@ -87,6 +87,19 @@ document.querySelector('.share_but').addEventListener('click', () => {
         link.click();
         toHide.forEach(ele => ele.style.display = "");
     })
+})
+
+document.querySelector('.hamburger').addEventListener("click", () => {
+    if (!isactive){
+    document.querySelector('.hamburger').classList.add('isactive');
+    isactive = true;
+    document.querySelector('.drop_box').style.display = "flex";
+    }
+    else{
+        document.querySelector('.hamburger').classList.remove('isactive');
+    isactive = false;
+    document.querySelector('.drop_box').style.display = "none";
+    }
 })
 
 ChooseIndex();

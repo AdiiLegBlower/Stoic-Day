@@ -22,6 +22,8 @@
 }
 
 .hamburger{
+    border-radius: 100%;
+    padding: 10px;
     margin-left: 20px;
 }
 
@@ -45,6 +47,7 @@ body{
     width: 90vw;
     height: 87vh;
     padding: 100px;
+    position: relative;
 }
 
 .auth_img{
@@ -131,3 +134,46 @@ hr {
 .icon:hover{
     opacity: 60%;
 }
+
+.drop_box{
+    z-index: 10;
+    background-color: rgba(181, 174, 161);
+    width: 150px;
+    height: 300px;
+    position: absolute;
+    display: none;
+    border-radius: 20px;
+    margin-left: 10px;
+    flex-direction: column;
+    box-shadow: 2px 2px 5px rgb(68, 67, 67);
+    padding: 5px;
+}
+
+.option_drop{
+    position: relative;
+    height: 20%;
+    width: 100%;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.option_drop:hover{
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(173, 163, 145);
+
+}
+
+.down_box{
+    border: none;
+}
+
+.isactive{
+    border-radius: 100%;
+    padding: 10px;
+    background-color: rgb(173, 163, 145)
+}
+
