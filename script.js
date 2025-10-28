@@ -77,10 +77,15 @@ document.querySelector('.read_but').addEventListener('click', () => {
 })
 
 document.querySelector('.share_but').addEventListener('click', () => {
-    let contimg = document.querySelector('.content');
-
+    let contimg = document.querySelector('.imgPart');
+    let toHide = document.querySelectorAll(".arrows, .body_util");
+    toHide.forEach(ele => ele.style.display = "none");
     html2canvas(contimg).then(canvas => {
-        
+        let link = document.createElement('a');
+        link.download = "div_image.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        toHide.forEach(ele => ele.style.display = "");
     })
 })
 
