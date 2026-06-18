@@ -1,7 +1,7 @@
 
 export async function fetchQuotes() {
   try{
-  let response = await fetch('http://localhost:3000/quote')
+  let response = await fetch('https://devserver-main--clinquant-beignet-9ceadf.netlify.app/quotes.json')
   let data = response.json()
 
   return data
