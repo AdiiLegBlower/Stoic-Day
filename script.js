@@ -1,4 +1,5 @@
-import { stoicQuotes } from "./data.js";
+import { fetchQuotes, fetchImages } from './data.js';
+
 import 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
 
 let alreadyDisplayed = [];
@@ -8,10 +9,17 @@ let isspeaking = false;
 let bookmarked = [];
 let index;
 let isactive = false;
+let stoicQuotes = ''
+async function init() {
 
+    stoicQuotes = await fetchQuotes();  // Array of 96 quotes
+
+
+    ChooseIndex();
+
+}
 function ChooseIndex(){
     index = Math.floor(Math.random()*100);
-    console.log(index);
     if ( stoicQuotes[index] &&!alreadyDisplayed.includes()){
         alreadyDisplayed.push(index);
         
@@ -23,18 +31,19 @@ function ChooseIndex(){
     }
 }
 
-function displayRand(index){
+ async function displayRand(index){
     let myquote = stoicQuotes[index];
-     quote = myquote.quote;
+     let text = myquote.quote;
         let author = myquote.author
+        let image = await fetchImages(author)
         let html = `
         <div>
-                    <img class="auth_img" src="images/${author}.webp">
+                    <img class="auth_img" src="${image.thumbnail.source}">
                 </div>
                 <div class="written_cont">
                     <div class="author_name">${author}</div>
                     <hr>
-                    <div class="quote_box">"${quote}"</div>
+                    <div class="quote_box">"${text}"</div>
                 </div>
         `
         document.querySelector('.content').innerHTML = html;
@@ -102,4 +111,4 @@ document.querySelector('.hamburger').addEventListener("click", () => {
     }
 })
 
-ChooseIndex();
+init()
