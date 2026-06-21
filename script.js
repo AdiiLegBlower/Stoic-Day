@@ -7,18 +7,23 @@ let quote = '';
 let isspeaking = false;
 let index;
 let currentIndex
-let isactive = false;
 let stoicQuotes = ''
 let util_panel = document.querySelectorAll(".body_util")
 let nBack = 1
-let bookmarked = new Set()
+let bookmarked = retrunBookmark()
+let BookmarksOpend = false
+let runBookmarks = []
+function retrunBookmark(){
+    let saved = localStorage.getItem("bookmarked")
+    return saved ? new Set(JSON.parse(saved)) : new Set ()
+}
+
 async function init() {
 
     stoicQuotes = await fetchQuotes();  
 
 
     ChooseIndex();
-
 }
 function ChooseIndex(){
     index = Math.floor(Math.random()*100);
@@ -34,6 +39,7 @@ function ChooseIndex(){
 }
 
  async function displayRand(index){
+    console.log(index)
     let myquote = stoicQuotes[index];
      let text = myquote.quote;
         let author = myquote.author
@@ -56,6 +62,7 @@ function ChooseIndex(){
 }
 
 function backpress(){
+if (!BookmarksOpend){
     if(alreadyDisplayed.length - 1 - nBack >= 0){
     console.log (alreadyDisplayed)
     let n = alreadyDisplayed.length - 1 - nBack;
@@ -67,8 +74,19 @@ function backpress(){
         return
     }
 }
+else {
+    if (nBack > 0){
+        nBack--
+        displayRand(runBookmarks[nBack])
+    }
+    else {
+        return
+    }
+}
+}
 
 function frontpress(){
+if (!BookmarksOpend){
     if (currentIndex == alreadyDisplayed[alreadyDisplayed.length - 1]){
         ChooseIndex();
     }
@@ -79,7 +97,21 @@ function frontpress(){
         console.log (alreadyDisplayed)
         console.log(alreadyDisplayed[n])
     }
+}
+else {
+    console.log(runBookmarks)
+if (nBack < runBookmarks.length - 1){
+    ++nBack
+    console.log(runBookmarks[nBack])
+    displayRand(runBookmarks[nBack])
+}
+else {
+    nBack = 1
+    console.log(runBookmarks[nBack])
+    displayRand(runBookmarks[nBack])
+}
     
+}   
 }
 
 document.querySelector('.left-scroll').addEventListener('click', () => {
@@ -135,18 +167,24 @@ util_panel.forEach((ele) => {ele.addEventListener("click", (e) => {
         }
     )
 
-document.querySelector('.hamburger').addEventListener("click", () => {
-    if (!isactive){
-    document.querySelector('.hamburger').classList.add('isactive');
-    isactive = true;
-    document.querySelector('.drop_box').style.display = "flex";
-    }
-    else{
-        document.querySelector('.hamburger').classList.remove('isactive');
-    isactive = false;
-    document.querySelector('.drop_box').style.display = "none";
+document.querySelectorAll('.Heading').forEach((ele) => {
+    ele.addEventListener("click", (e) => {
+    let clcikedBut = e.target.closest(".hamburger")
+    if (clcikedBut){
+        document.querySelector('.drop_box').classList.toggle('active');
     }
 })
+})
+
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.hamburger')) {
+        document.querySelector('.drop_box').classList.remove('active')
+    }
+})
+
+
+
+
 
 init()
 
@@ -156,13 +194,42 @@ util_panel.forEach((ele) => {ele.addEventListener("click", (e) => {
     if (butclick){
         if(!bookmarked.has(currentIndex)){
             bookmarked.add(currentIndex)
+        localStorage.setItem("bookmarked", JSON.stringify([...bookmarked]))
+        if (BookmarksOpend){
+            runBookmarks = [null, ...bookmarked]
+        }
         butclick.querySelector(".fa-bookmark").classList.add("fa-solid")
         butclick.querySelector(".fa-bookmark").classList.remove("fa-regular")
+        console.log(bookmarked)
         return
         }
         bookmarked.delete(currentIndex)
+        localStorage.setItem("bookmarked", JSON.stringify([...bookmarked]))
+        if (BookmarksOpend){
+            runBookmarks = [null, ...bookmarked]
+        }
         butclick.querySelector(".fa-bookmark").classList.add("fa-regular")
         butclick.querySelector(".fa-bookmark").classList.remove("fa-solid")
+        console.log(bookmarked)
     }
     
 })})
+
+let clickBookmark = document.querySelector(".showBookmarks")
+clickBookmark.addEventListener("click", () => {
+    document.querySelector(".exitButt").classList.toggle("active")
+    BookmarksOpend = true
+    runBookmarks = [null, ...bookmarked]
+    displayRand(runBookmarks[nBack])
+}
+    )
+
+document.querySelector(".exitButt").addEventListener("click", ()=>{
+    document.querySelector(".exitButt").classList.toggle("active")
+    BookmarksOpend = false
+    runBookmarks = []
+    nBack = 1
+    displayRand(alreadyDisplayed[alreadyDisplayed.length - 1])
+})
+
+document.querySelector("showAuth")

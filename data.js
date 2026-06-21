@@ -1,3 +1,4 @@
+let imageCache = new map()
 
 export async function fetchQuotes() {
   try{
@@ -12,6 +13,9 @@ export async function fetchQuotes() {
 }
 
 export async function fetchImages(name) {
+  console.log(imageCache)
+  if (imageCache.has(name)) return imageCache.get(name)
+    
   try {
     let url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`
     let response = await fetch(url)
@@ -27,8 +31,11 @@ export async function fetchImages(name) {
         const betterRes = await fetch(
             `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(topTitle)}`
         )
-        return await betterRes.json()
+        let finalRes = await betterRes.json()
+        imageCache.set(name, finalRes )
+        return finalRes
     }
+    imageCache.set(name, data)
     return data
   }catch {
     console.log("unable to fetch image")
