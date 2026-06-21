@@ -1,4 +1,4 @@
-let imageCache = new map()
+let imageCache = new Map()
 
 export async function fetchQuotes() {
   try{
