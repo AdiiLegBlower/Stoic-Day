@@ -13,7 +13,6 @@ export async function fetchQuotes() {
 }
 
 export async function fetchImages(name) {
-  console.log(imageCache)
   if (imageCache.has(name)) return imageCache.get(name)
     
   try {
