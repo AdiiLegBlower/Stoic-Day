@@ -6,7 +6,7 @@ Wikipedia integration and progressive web aplication.
 
 ## Screenshots
 
-![App Screenshot](/Users/papanewton/Desktop)
+![App Screenshot](https://ibb.co/0jgRNk3j)
 
 ## 🔗 Live Demo
 [View Live](https://adiilegblower.github.io/Stoic-Day/)
