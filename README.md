@@ -6,7 +6,7 @@ Wikipedia integration and progressive web aplication.
 
 ## Screenshots
 
-![App Screenshot](https://ibb.co/0jgRNk3j)
+![App Screenshot](https://res.cloudinary.com/dppchcqlu/image/upload/f_auto,q_auto/fullpageSSpcCropped_hvx6jb)
 
 ## 🔗 Live Demo
 [View Live](https://adiilegblower.github.io/Stoic-Day/)
